@@ -1,7 +1,10 @@
 import javax.swing.*;
 
+// Esta clase representa la interfaz gráfica del servidor TCP
+// Aplica POO: Encapsulamiento, Herencia (de JFrame)
 public class TCPServerGUI extends JFrame {
 
+    // Atributos privados seria encapsulamiento Encapsulamiento
     private JTextArea messageArea;
     private JLabel statusLabel;
 
@@ -11,6 +14,7 @@ public class TCPServerGUI extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); // Centrar ventana
 
+        // Configura el área de mensajes
         messageArea = new JTextArea();
         messageArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(messageArea);
@@ -20,19 +24,21 @@ public class TCPServerGUI extends JFrame {
         add(scrollPane, "Center");
         add(statusLabel, "South");
 
-        setVisible(true); // <-- ESTA LÍNEA ES MUY IMPORTANTE
+        setVisible(true); // Este método muestra la GUI
 
-        // Inicia el hilo del servidor
+        // Crea un objeto de ControlServer (Instanciación)
         ControlServer server = new ControlServer(this);
-        server.start();
+        server.start(); // Herencia de Thread
     }
 
+    // Método público para mostrar mensajes en la GUI
     public void mostrarMensaje(String mensaje) {
         SwingUtilities.invokeLater(() -> {
             messageArea.append(mensaje + "\n");
         });
     }
 
+    //Método para actualizar el estado del servidor (estado de conexión)
     public void actualizarEstado(String estado) {
         SwingUtilities.invokeLater(() -> {
             statusLabel.setText("Estado: " + estado);
@@ -41,7 +47,6 @@ public class TCPServerGUI extends JFrame {
 
     public static void main(String[] args) {
         System.out.println("Iniciando ventana...");
-        new TCPServerGUI();
+        new TCPServerGUI(); // Instanciación de objeto principal del servidor
     }
 }
-
